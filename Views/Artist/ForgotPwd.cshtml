@@ -1,0 +1,31 @@
+﻿<h1>@Html.TitleForPage(T("Glemt Password"))</h1>
+
+@using Panmedia.Artist.ViewModels
+@model ForgotPwdVM
+@{    
+    // Script.Require("JQuery").AtFoot();
+}
+
+@using (Html.BeginFormAntiForgeryPost("ForgotPwd"))
+{
+    <div class="form-group">
+        @Html.LabelFor(x => x.EmailAdresse, T("EmailAdresse"))
+        @Html.TextBoxFor(x => x.EmailAdresse, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.EmailAdresse)
+    </div>
+
+    @*<div class="form-group">
+        <fieldset>
+            @Html.LabelFor(x => x.Password, T("Password"))
+            @Html.Password("Password", new { @class = "text medium" })
+            @Html.ValidationMessageFor(x => x.Password)
+        </fieldset>
+        <fieldset>
+            @Html.LabelFor(x => x.ConfirmPassword, T("Confirm Password"))
+            @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "text medium" })
+            @Html.ValidationMessageFor(x => x.ConfirmPassword, "*")
+        </fieldset>
+    </div>*@
+
+    <input type="submit" class="btn-primary" name="Submit" id="Submit" value="Resend Password" />
+}

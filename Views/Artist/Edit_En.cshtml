@@ -1,0 +1,164 @@
+﻿<h1>@Html.TitleForPage("Edit User Profile")</h1>
+@using Panmedia.Artist.Models
+@using Panmedia.Artist.ViewModels
+@model EditProfileViewModel
+@{
+    // var vm = (EditProfileViewModel)Model;
+    // var imagepath = @Display.MediaUrl(Path: vm.ProfilePictureURL); /*Magic Image silver bullet*/
+    Script.Require("JQuery").AtFoot();
+}
+
+
+
+@using (Html.BeginFormAntiForgeryPost("Edit")) //, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Fornavn, T("First Name"))
+        @Html.TextBoxFor(x => x.Fornavn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Fornavn)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Efternavn, T("Last Name"))
+        @Html.TextBoxFor(x => x.Efternavn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Efternavn)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Kunstnernavn, T("Artist Name"))
+        @Html.TextBoxFor(x => x.Kunstnernavn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Kunstnernavn)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Bynavn, T("City"))       
+        @Html.TextBoxFor(x => x.Bynavn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Bynavn)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Gade, T("Street"))       
+        @Html.TextBoxFor(x => x.Gade, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Gade)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Husnummer, T("House No."))
+        @Html.TextBoxFor(x => x.Husnummer, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Husnummer)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Postnummer, T("Postal Code"))
+        @Html.TextBoxFor(x => x.Postnummer, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Postnummer)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Telefon, T("Telephone"))
+        @Html.TextBoxFor(x => x.Telefon, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Telefon)
+    </div>
+
+
+    // Version 'hand made in dk': radio butz based on a string equivalent for the enum in the passed model, niiice
+    <div class="form-group">
+        @Html.LabelFor(x => x.PhoneVisibility, T("Telephone visible for:"))<br />
+        @Html.RadioButtonFor(x => x.PhoneVisibility, PhoneVisibility.Ingen, new { id = PhoneVisibility.Ingen })
+        <label for=@PhoneVisibility.Ingen>No one</label><br />
+        @Html.RadioButtonFor(x => x.PhoneVisibility, PhoneVisibility.Medlemmer, new { id = PhoneVisibility.Medlemmer })
+        <label for=@PhoneVisibility.Medlemmer>ÅSV Members</label><br />
+        @Html.RadioButtonFor(x => x.PhoneVisibility, PhoneVisibility.Alle, new { id = PhoneVisibility.Alle })
+        <label for=@PhoneVisibility.Alle>Everyone</label>
+    </div>
+
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.EmailAdresse, T("Email Address"))
+        @Html.TextBoxFor(x => x.EmailAdresse, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.EmailAdresse)
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.EmailVisibility, T("Email address visible for:"))<br />
+        @Html.RadioButtonFor(x => x.EmailVisibility, EmailVisibility.Ingen, new { id = EmailVisibility.Ingen })
+        <label for=@EmailVisibility.Ingen>No one</label><br />
+        @Html.RadioButtonFor(x => x.EmailVisibility, EmailVisibility.Medlemmer, new { id = EmailVisibility.Medlemmer })
+        <label for=@EmailVisibility.Medlemmer>ÅSV Members</label><br />
+        @Html.RadioButtonFor(x => x.EmailVisibility, EmailVisibility.Alle, new { id = EmailVisibility.Alle })
+        <label for=@EmailVisibility.Alle>Everyone</label>
+    </div>
+
+
+    @*<div class="form-group">
+        <fieldset>
+            @Html.LabelFor(x => x.Password, T("Password"))
+            @Html.Password("Password", new { @class = "text medium" })
+            @Html.ValidationMessageFor(x => x.Password)
+        </fieldset>
+        <fieldset>
+            @Html.LabelFor(x => x.ConfirmPassword, T("Confirm Password"))
+            @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "text medium" })
+            @Html.ValidationMessageFor(x => x.ConfirmPassword, "*")
+        </fieldset>
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Hjemmeside, T("Webpage"))
+        @Html.TextBoxFor(x => x.Hjemmeside, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Hjemmeside)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Profiltekst, T("Profile Text"))
+        @Html.TextAreaFor(x => x.Profiltekst, 5, 1, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Profiltekst)
+    </div>
+
+    @*<div class="form-group">
+        @Html.Label("Profilbillede")
+        <br />
+        <br />
+        <p>*@
+            @*<img src="@Url.Content(vm.ProfilePictureURL)" class="rounded rounded-100 card-avatar">*@
+            @*<img src="@Url.Content(Model.ProfilePictureURL)" class="rounded rounded-100 card-avatar">*@
+        @*</p>
+        <br />
+        <br />*@
+        @*alternativ: returnurl = Context.Request.RawUrl*@
+        @*@Html.ActionLink("Ret billede (åbner i nyt vindue)", "ImageUpload", "Artist", new { returnUrl = "Profile/Edit" }, null)*@
+
+        @*<span class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" onclick="loadProfilePicModal()">
+            Ret billede (åbner i nyt vindue)
+        </span>
+
+    </div>*@
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-content"></div>
+    </div>
+    <!-- /.modal -->
+
+    <input type="submit" name="Submit" id="Submit" value="Save Profile" />
+}
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        function loadProfilePicModal() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ImageUpload", "Artist", new { area = "Panmedia.Artist" })',
+                traditional: true,
+                data: {
+                    redirecturl: '@Context.Request.RawUrl',
+                    __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()'
+                },
+            }).done(function (response) {
+                // alert(response);
+                $('#myModal .modal-content').html(response);
+                return;
+            })
+        };
+    </script>
+}

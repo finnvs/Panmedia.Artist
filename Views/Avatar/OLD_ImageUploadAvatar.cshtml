@@ -1,0 +1,87 @@
+﻿<h1>@Html.TitleForPage(T("Upload et profilbillede").Text)</h1>
+@using Panmedia.Artist.ViewModels
+
+@{
+    Script.Require("jQuery");
+    Script.Require("jQueryUI");
+    Script.Require("ImageUpload").AtFoot();
+    Script.Require("jQueryBlockUI").AtFoot();
+    Script.Require("LoadingOverlay").AtFoot();
+    Script.Require("LoadingOverlayProgress").AtFoot();
+    Style.Require("UploaderStyle");
+
+    // Avatar requires
+    Script.Require("Avatar").AtFoot();
+    Script.Require("AvatarJCrop").AtFoot();
+    Script.Require("AvatarJQueryForm").AtFoot();
+    Script.Require("AvatarRespond").AtFoot();
+    Script.Require("AvatarRespondMatchMedia").AtFoot();
+    Style.Require("AvatarStyle");
+    Style.Require("AvatarJCropStyle");
+
+}
+
+
+<section id="avatar-upload-box">
+    @using (Ajax.BeginForm("_Upload", "Avatar",
+                new AjaxOptions() { HttpMethod = "POST" },
+                new { enctype = "multipart/form-data", id = "avatar-upload-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="file" name="files" /><br>
+        <div class="upload-file-notice">Maximum Size: <span id="avatar-max-size"></span> MB</div>
+    }
+    <div class="upload-progress col-md-6 hidden">
+        <div class="upload-percent-value pull-left">0%</div>
+        <div class="upload-percent-bar pull-left"></div>
+    </div>
+    <div id="upload-status"></div>
+</section>
+<section id="avatar-crop-box" class="hidden">
+    <p>
+        <img src="" id="crop-avatar-target" alt="Uploaded image" />
+        <div id="preview-pane">
+            <div class="preview-container">
+                <img src="" class="jcrop-preview" alt="Preview" />
+            </div>
+        </div>
+    </p>
+    <p><button class="btn btn-default" onclick="saveAvatar()">Save Avatar</button></p>
+</section>
+<div id="avatar-result" class="hidden">
+    <img src="" alt="Final Image" />
+</div>
+
+
+    @*<div id="FormUpload">
+        @Html.AntiForgeryToken()
+        <span class="btn btn-success fileinput-button" onclick="Init_Upload();">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Vælg en billedfil</span>
+            <input type="file" name="UploadedFile" id="UploadedFile" />
+        </span>
+        <button class="btn btn-primary start" type="button" id="Submit_btn">            
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Upload billede</span>
+        </button>
+        <button class="btn btn-warning cancel"
+                type="button" id="Cancel_btn">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Luk</span>
+        </button>
+
+        <div class="progress CustomProgress">
+            <div id="FileProgress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                <span></span>
+            </div>
+        </div>
+        <div class="InfoContainer">
+            <div id="Imagecontainer"></div>
+            <div id="FileName" class="info">
+            </div>
+            <div id="FileType" class="info">
+            </div>
+            <div id="FileSize" class="info">
+            </div>
+        </div>
+    </div>*@

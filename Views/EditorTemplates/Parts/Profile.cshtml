@@ -1,0 +1,111 @@
+﻿<h1>@Html.TitleForPage(T("Rediger brugerprofil").Text)</h1>
+@using Panmedia.Artist.Models
+@using Panmedia.Artist.ViewModels
+@*@model EditProfileViewModel*@
+@model ProfilePart
+@*@{
+    var vm = (EditProfileViewModel)Model;
+    //var vm = (ProfilePart)Model;
+    var imagepath = @Display.MediaUrl(Path: vm.ProfilePictureURL); /*Magic Image silver bullet*/
+    }*@
+
+
+@using (Html.BeginFormAntiForgeryPost("Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Bynavn, T("Bynavn"))
+        @Html.TextBoxFor(x => x.Bynavn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Bynavn)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Gade, T("Gade"))
+        @Html.TextBoxFor(x => x.Gade, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Gade)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Husnummer, T("Husnummer"))
+        @Html.TextBoxFor(x => x.Husnummer, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Husnummer)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Postnummer, T("Postnummer"))
+        @Html.TextBoxFor(x => x.Postnummer, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Postnummer)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Telefon, T("Telefon"))
+        @Html.TextBoxFor(x => x.Telefon, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Telefon)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Kunstnernavn, T("Kunstnernavn"))
+        @Html.TextBoxFor(x => x.Kunstnernavn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Kunstnernavn)
+    </div>
+
+    // Version 'hand made in dk': radio butz based on a string equivalent for the enum in the passed model, niiice
+    <div class="form-group">
+        @Html.LabelFor(x => x.PhoneVisibility, T("Telefon synlig for:"))<br />
+        @Html.RadioButtonFor(x => x.PhoneVisibility, PhoneVisibility.Ingen, new { id = PhoneVisibility.Ingen })
+        <label for=@PhoneVisibility.Ingen>@PhoneVisibility.Ingen</label><br />
+        @Html.RadioButtonFor(x => x.PhoneVisibility, PhoneVisibility.Medlemmer, new { id = PhoneVisibility.Medlemmer })
+        <label for=@PhoneVisibility.Medlemmer>@PhoneVisibility.Medlemmer</label><br />
+        @Html.RadioButtonFor(x => x.PhoneVisibility, PhoneVisibility.Alle, new { id = PhoneVisibility.Alle })
+        <label for=@PhoneVisibility.Alle>@PhoneVisibility.Alle</label>
+    </div>
+
+    @*<div class="form-group">
+        @Html.LabelFor(x => x.EmailAdresse, T("EmailAdresse"))
+        @Html.TextBoxFor(x => x.EmailAdresse, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.EmailAdresse)
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.EmailVisibility, T("Email adresse synlig for:"))<br />
+        @Html.RadioButtonFor(x => x.EmailVisibility, EmailVisibility.Ingen, new { id = EmailVisibility.Ingen })
+        <label for=@EmailVisibility.Ingen>@EmailVisibility.Ingen</label><br />
+        @Html.RadioButtonFor(x => x.EmailVisibility, EmailVisibility.Medlemmer, new { id = EmailVisibility.Medlemmer })
+        <label for=@EmailVisibility.Medlemmer>@EmailVisibility.Medlemmer</label><br />
+        @Html.RadioButtonFor(x => x.EmailVisibility, EmailVisibility.Alle, new { id = EmailVisibility.Alle })
+        <label for=@EmailVisibility.Alle>@EmailVisibility.Alle</label>
+    </div>
+
+
+    @*<div class="form-group">
+            @Html.LabelFor(x => x.Password, T("Password"))
+            @Html.Password("Password", new { @class = "text medium" })
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Hjemmeside, T("Hjemmeside"))
+        @Html.TextBoxFor(x => x.Hjemmeside, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Hjemmeside)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Profiltekst, T("Profiltekst"))
+        @Html.TextAreaFor(x => x.Profiltekst, 5, 1, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Profiltekst)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Profilbillede")
+        <br />
+        <br />
+        <p>
+            @*<img src="@Url.Content(vm.ProfilePictureURL)" class="rounded rounded-100 card-avatar">*@
+            <img src="@Url.Content(Model.ProfilePictureURL)" class="rounded rounded-100 card-avatar">
+        </p>
+        <br />
+        <br />
+        @Html.ActionLink("Ret billede (åbner i nyt vindue)", "ImageUpload", "Artist", new { returnUrl = "Profile/Edit" }, null)
+
+    </div>
+    <input type="submit" name="Submit" id="Submit" value="Gem Profil" />
+}

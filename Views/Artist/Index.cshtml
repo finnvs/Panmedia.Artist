@@ -1,0 +1,39 @@
+﻿@using Orchard.ContentManagement
+@using Panmedia.Artist.ViewModels
+@{
+    var vm = (ProfileViewModel)Model;
+    if (vm.ProfilePictureURL == "" || vm.ProfilePictureURL == null)
+    {
+        vm.ProfilePictureURL = "http://panmediablob.blob.core.windows.net/aasv-container/silhouette.jpg";
+    }
+    var imagepath = @Display.MediaUrl(Path: vm.ProfilePictureURL); /*Magic Image silver bullet*/
+}
+
+<div class="thumbnail card-wrapper">
+    <div class="card-image" style="background-image:url(@Url.Content(Html.ThemePath(WorkContext.CurrentTheme, "/Content/Images/Piano_small.jpg"))"></div>
+    <div class="caption text-center">
+        <img src="@Url.Content(vm.ProfilePictureURL)" class="rounded rounded-100 card-avatar">
+        <br />
+        <h3>@vm.Fornavn&nbsp;@vm.Efternavn</h3>
+        <br />
+        <text>Kunstnernavn: @vm.Kunstnernavn</text>
+        <br />
+        <br />
+        @if (HttpContext.Current.User.Identity.IsAuthenticated && (Model.PhoneVisibility != "Ingen"))
+            {
+            <span class="glyphicon-phone-alt">Telefon: @vm.Telefon</span>
+        }
+        <br />
+        <br />
+        @if (HttpContext.Current.User.Identity.IsAuthenticated && (Model.EmailVisibility != "Ingen"))
+            {
+            <span class="glyphicon-inbox">Email: @vm.EmailAdresse</span>
+        }
+        <br />
+        <br />
+        <text>Webside: <a href="@vm.Hjemmeside" target="_blank">@vm.Hjemmeside</a></text>
+        <br />
+        <br />
+        <text>@vm.Profiltekst</text>
+    </div>
+</div>

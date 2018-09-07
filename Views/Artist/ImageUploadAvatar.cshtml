@@ -1,0 +1,98 @@
+﻿<h1>@Html.TitleForPage(T("Upload et profilbillede").Text)</h1>
+
+@{
+    Script.Require("jQuery");
+    Script.Require("LoadingOverlay").AtFoot();
+    Script.Require("LoadingOverlayProgress").AtFoot();
+    Style.Require("UploaderStyle");
+
+    // Avatar requires
+    Script.Require("MicrosoftAjax");
+    Script.Require("MicrosoftMvcAjax");
+    Script.Require("Avatar").AtFoot();
+    Script.Require("AvatarJCrop").AtFoot();
+    Script.Require("AvatarJQueryForm").AtFoot();
+    Script.Require("AvatarJQueryRotate").AtFoot();
+    Style.Require("AvatarJCropStyle");
+}
+
+<style>
+    #preview-pane {
+        position: absolute;
+        right: -160px;
+        z-index: 1;
+        display: block;
+        border: 1px #000 solid;
+    }
+
+        #preview-pane .preview-container {
+            overflow: hidden;
+            width: 150px; /* ToDo - size of the crop window*/
+            height: 150px; /* ToDo - size of the crop window*/
+        }
+
+    .upload-progress {
+        border: 1px #bbb solid;
+        padding: 0;
+    }
+
+    .upload-percent-value {
+        padding-left: 10px;
+        position: absolute;
+    }
+
+    .upload-percent-bar {
+        background-color: #bbb;
+        height: 20px;
+    }
+</style>
+
+<section id="avatar-upload-box">
+    @using (Ajax.BeginForm("_Upload", "Avatar", null,
+                        new AjaxOptions() { HttpMethod = "POST" },
+                        new { enctype = "multipart/form-data", id = "avatar-upload-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            <input type="file" class="btn btn-default" name="files" onclick="pageInit()" />
+            <br />
+            <br />
+            <button class="btn btn-warning cancel" type="button" id="cancel_btn" onclick="cancelImageUpload()">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Luk vindue</span>
+            </button>
+        </div>
+        <br />
+        <div class="upload-file-notice">Max størrelse: 5 MB</div>
+
+        <div class="upload-progress col-md-6 hidden">
+            <div class="upload-percent-value pull-left">0%</div>
+            <div class="upload-percent-bar pull-left"></div>
+        </div>
+        <div id="upload-status"></div>
+    };
+</section>
+<section id="avatar-crop-box" class="hidden">
+    <p>
+        <img src="" id="crop-avatar-target" alt="Uploaded image" />
+        <div id="preview-pane">
+            <div class="preview-container">
+                <img src="" class="jcrop-preview" alt="Preview" />
+            </div>
+        </div>
+    </p>
+    <p>
+        <button class="btn btn-default" onclick="saveAvatar()">Save Avatar</button>
+
+        <button class="btn btn-default hidden" id="rotate-apply">Rotate 90+</button>
+        <button class="btn btn-default hidden" id="rotate-minus90">Rotate 90-</button>
+        <button class="btn btn-default hidden" id="rotate-180">Rotate 180</button>
+        <button class="btn btn-default hidden" id="rotate-cancel">Cancel Rotate</button>
+    </p>
+</section>
+<div id="avatar-result" class="hidden">
+    <img src="" alt="Final Image" />
+</div>
+
+
+

@@ -1,0 +1,27 @@
+@using Panmedia.Artist.ViewModels;
+@model ProfileListVM
+<div>
+    <h5>AASV Profiler:</h5>
+    <p>
+        @if (Model.Artists.Count >= 1)
+        {            
+            
+                foreach (ArtistInfo a in Model.Artists)
+                {
+                <div class="row" itemscope="itemscope" itemid="@a.ArtistId" itemtype="http://panmedia.dk/data/Artist">
+                    <div class="col-sm-12">                        
+                        <a href="~/ShowProfile/@a.ArtistId"><b>@a.ArtistTitle</b></a>
+                    </div>
+                </div>
+                
+                }
+                @Display(Model.Pager)
+            
+        }
+        else
+        {
+            if (Model.Artists.Count < 1)
+            { <b>@T("No artists found.")</b> }
+            }
+    </p>
+</div>
